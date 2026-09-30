@@ -165,21 +165,27 @@ img, svg { display: block; max-width: 100%; }
 
 /* 6. Nagłówek i nawigacja */
 .site-header {
-  position: sticky; top: 0; z-index: 50;
+  position: sticky; top: 0; z-index: 50; isolation: isolate;
   margin-bottom: calc(var(--header-h) * -1); /* nagłówek leży na tle hero */
+  color: var(--c-text-on-dark);
+}
+/* Tło z rozmyciem jest w pseudo-elemencie, a NIE na samym nagłówku: backdrop-filter na rodzicu
+   zamienia go w kontener dla elementów position:fixed i menu mobilne (.nav) przestaje wypełniać ekran. */
+.site-header::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: rgba(13, 31, 24, 0.55);
   -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px);
   border-bottom: 1px solid rgba(245, 239, 228, 0.08);
-  color: var(--c-text-on-dark);
   transition: background-color 0.3s, border-color 0.3s;
 }
-.site-header.is-scrolled { background: rgba(13, 31, 24, 0.94); border-bottom-color: rgba(245, 239, 228, 0.14); }
+.site-header.is-scrolled::before { background: rgba(13, 31, 24, 0.94); border-bottom-color: rgba(245, 239, 228, 0.14); }
 .header__inner { display: flex; align-items: center; gap: 1rem; min-height: var(--header-h); }
 .brand { display: inline-flex; flex-direction: column; gap: 0.1rem; margin-right: auto; text-decoration: none; line-height: 1.1; }
 .brand__name { font-family: var(--font-display); font-size: 1.45rem; font-weight: 480; letter-spacing: -0.01em; }
 .brand__tag { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c-rose-300); }
 
 .nav__list { display: flex; gap: 0.25rem; }
+.nav__cta { display: none; } /* przyciski tylko w menu mobilnym */
 .nav__link {
   display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 1rem; border-radius: 999px;
   font-size: 0.9375rem; font-weight: 600; text-decoration: none; color: var(--c-muted-on-dark);
@@ -203,7 +209,8 @@ img, svg { display: block; max-width: 100%; }
   .nav-toggle { display: inline-flex; }
   .js .nav {
     position: fixed; inset: var(--header-h) 0 0 0; z-index: 40;
-    display: flex; flex-direction: column; justify-content: center; padding: 2rem var(--gutter) 6rem;
+    display: flex; flex-direction: column; justify-content: space-between; gap: 2rem; overflow-y: auto; overscroll-behavior: contain;
+    padding: 1.5rem var(--gutter) calc(1.5rem + env(safe-area-inset-bottom));
     background:
       radial-gradient(70% 50% at 100% 0%, rgba(196, 98, 109, 0.28), transparent 70%),
       var(--c-forest-900);
@@ -214,6 +221,8 @@ img, svg { display: block; max-width: 100%; }
   .nav__list { flex-direction: column; gap: 0.5rem; }
   .nav__link { min-height: 3.5rem; padding: 0 0.25rem; border-radius: 0; border-bottom: 1px solid rgba(245, 239, 228, 0.12); font-family: var(--font-display); font-size: 1.875rem; font-weight: 420; color: var(--c-cream-100); background: none; }
   .nav__link:hover { background: none; }
+  .js .nav__cta { display: grid; gap: 0.75rem; }
+  .nav__meta { margin-bottom: 0.25rem; font-size: 0.9375rem; color: var(--c-muted-on-dark); }
   .menu-open { overflow: hidden; }
 }
 
