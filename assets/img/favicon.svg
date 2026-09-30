@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="15" fill="#0d1f18"/>
+  <g transform="translate(32 32) scale(.125)" fill="#f5efe4" fill-opacity=".9">
+    <path id="p" d="M0 0C42-62 44-172 0-230-44-172-42-62 0 0Z"/>
+    <use href="#p" transform="rotate(45)" fill="#e8b4b0"/>
+    <use href="#p" transform="rotate(90)"/>
+    <use href="#p" transform="rotate(135)" fill="#e8b4b0"/>
+    <use href="#p" transform="rotate(180)"/>
+    <use href="#p" transform="rotate(225)" fill="#e8b4b0"/>
+    <use href="#p" transform="rotate(270)"/>
+    <use href="#p" transform="rotate(315)" fill="#e8b4b0"/>
+  </g>
+  <circle cx="32" cy="32" r="4.5" fill="#c4626d"/>
+</svg>
